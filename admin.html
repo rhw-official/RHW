@@ -1,1 +1,139 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RHW - Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-slate-900 text-white flex flex-col">
+    <div class="p-5 border-b border-slate-800 font-bold text-xl flex items-center gap-2">
+      <i class="fa-solid fa-user-shield text-emerald-500"></i> RHW Admin
+    </div>
+    <nav class="flex-1 p-4 space-y-2 text-sm font-medium">
+      <a href="#dashboard" class="flex items-center gap-3 bg-emerald-600 px-4 py-2.5 rounded-lg text-white"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+      <a href="#programs" class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-2.5 rounded-lg"><i class="fa-solid fa-tasks"></i> Programs</a>
+      <a href="#messages" class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-2.5 rounded-lg"><i class="fa-solid fa-envelope"></i> Messages</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8 overflow-y-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl font-bold">Dashboard Overview</h1>
+      <span class="text-sm bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-medium">Status: Live</span>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500 font-medium">Total Programs</p>
+          <p id="stat-programs-count" class="text-2xl font-bold mt-1">4</p>
+        </div>
+        <i class="fa-solid fa-folder text-3xl text-emerald-500"></i>
+      </div>
+      <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500 font-medium">Messages</p>
+          <p id="stat-messages-count" class="text-2xl font-bold mt-1">12</p>
+        </div>
+        <i class="fa-solid fa-inbox text-3xl text-blue-500"></i>
+      </div>
+    </div>
+
+    <!-- Add Program Form -->
+    <div class="bg-white p-6 rounded-xl border shadow-sm mb-8">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-600"></i> Add New Program</h2>
+      <form id="add-program-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Program Title</label>
+          <input type="text" id="prog-title" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="e.g. Healthcare Access Camp" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Description</label>
+          <textarea id="prog-desc" rows="3" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Write program details..." required></textarea>
+        </div>
+        <button type="submit" class="bg-emerald-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">+ Add Program</button>
+      </form>
+    </div>
+
+    <!-- Received Messages Section -->
+    <div class="bg-white p-6 rounded-xl border shadow-sm">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-comments text-emerald-600"></i> Website Messages</h2>
+      <div id="messages-list" class="space-y-3">
+        <p class="text-slate-500 text-sm">Loading messages...</p>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // FIXME: Replace with your Firebase credentials
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Add Program Action
+    document.getElementById('add-program-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await addDoc(collection(db, "programs"), {
+          title: document.getElementById('prog-title').value,
+          description: document.getElementById('prog-desc').value,
+          createdAt: new Date()
+        });
+        alert('Program added successfully!');
+        e.target.reset();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    });
+
+    // Load Messages Action
+    async function loadMessages() {
+      const list = document.getElementById('messages-list');
+      try {
+        const query = await getDocs(collection(db, "messages"));
+        if(query.empty) {
+          list.innerHTML = '<p class="text-slate-400 text-sm">No messages received yet.</p>';
+          return;
+        }
+        list.innerHTML = '';
+        query.forEach(doc => {
+          const m = doc.data();
+          list.innerHTML += `
+            <div class="p-4 bg-slate-50 border rounded-lg">
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-bold text-sm text-slate-800">${m.name} (${m.email})</span>
+                <span class="text-xs text-slate-400">${new Date(m.date).toLocaleDateString()}</span>
+              </div>
+              <p class="text-slate-600 text-sm">${m.message}</p>
+            </div>
+          `;
+        });
+      } catch(e) {
+        list.innerHTML = '<p class="text-red-500 text-sm">Please update Firebase credentials in the script.</p>';
+      }
+    }
+
+    loadMessages();
+  </script>
+</body>
+</html>
