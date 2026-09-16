@@ -16,7 +16,7 @@
 
   <!-- Navbar -->
   <nav class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center relative">
       <div class="flex items-center gap-3">
         <img src="FB_IMG_1789565609062.jpg" alt="RHW Logo" class="w-12 h-12 rounded-full border border-emerald-500 object-cover">
         <div>
@@ -24,6 +24,8 @@
           <span class="text-xs text-emerald-600 font-semibold">RHW Organization</span>
         </div>
       </div>
+      
+      <!-- Desktop Navigation -->
       <div class="hidden lg:flex space-x-6 font-medium text-slate-600 text-sm">
         <a href="#home" class="hover:text-emerald-600 transition">Home</a>
         <a href="#about" class="hover:text-emerald-600 transition">About Us</a>
@@ -33,7 +35,26 @@
         <a href="#team" class="hover:text-emerald-600 transition">Leadership</a>
         <a href="#contact" class="hover:text-emerald-600 transition">Contact</a>
       </div>
-      <a href="#contact" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">Get Involved</a>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="hidden sm:inline-block bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">Get Involved</a>
+        
+        <!-- Three-Dot (Hamburger) Menu Button -->
+        <button id="menu-btn" aria-label="Toggle Menu" class="p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition focus:outline-none">
+          <i class="fa-solid fa-ellipsis-vertical text-2xl"></i>
+        </button>
+      </div>
+
+      <!-- Quick Shortcut Menu Dropdown -->
+      <div id="dropdown-menu" class="hidden absolute right-4 top-16 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50">
+        <a href="#home" class="menu-link block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 font-medium">Home</a>
+        <a href="#about" class="menu-link block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 font-medium">About Us</a>
+        <a href="#objectives" class="menu-link block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 font-medium">Objectives</a>
+        <a href="#areas" class="menu-link block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 font-medium">Areas of Work</a>
+        <a href="#recent-works" class="menu-link block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 font-medium">Recent Works</a>
+        <a href="#team" class="menu-link block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 font-medium">Leadership</a>
+        <a href="#contact" class="menu-link block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 font-medium border-t border-slate-100 mt-1 pt-2">Contact Us</a>
+      </div>
     </div>
   </nav>
 
@@ -173,7 +194,6 @@
           <p class="text-emerald-600 font-semibold text-xs uppercase tracking-wide mb-3">Founder</p>
           <p class="text-xs text-slate-600 mb-4">Focused on youth empowerment, education, and humanitarian service.</p>
           <div class="text-xs text-slate-500 space-y-1">
-            <p><i class="fa-solid fa-phone"></i> 01893555037</p>
             <p><i class="fa-solid fa-envelope"></i> anjiskhan81@gmail.com</p>
           </div>
         </div>
@@ -224,7 +244,6 @@
           <p class="flex items-center gap-3"><i class="fa-solid fa-location-dot text-emerald-600 text-lg w-5"></i> Rohingya Refugee Camps, Ukhiya, Cox's Bazar, Bangladesh</p>
           <p class="flex items-center gap-3"><i class="fa-solid fa-envelope text-emerald-600 text-lg w-5"></i> rohingyahumanitarianworker@gmail.com</p>
           <p class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-emerald-600 text-lg w-5"></i> +880 1993-819398 (Official WhatsApp)</p>
-          <p class="flex items-center gap-3"><i class="fa-solid fa-phone text-emerald-600 text-lg w-5"></i> +880 1893555037 (Anjis Khan - Founder)</p>
         </div>
         <div class="mt-6 flex gap-4">
           <a href="https://www.facebook.com/share/1GMB18CLvt/" target="_blank" class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:opacity-90"><i class="fa-brands fa-facebook-f"></i></a>
@@ -248,6 +267,33 @@
   <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs border-t border-slate-800">
     <p>&copy; 2026 Rohingya Humanitarian Workers (RHW). All rights reserved.</p>
   </footer>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    // Toggle dropdown
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', () => {
+      if (!dropdownMenu.classList.contains('hidden')) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+
+    // Close menu on selecting a shortcut link
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        dropdownMenu.classList.add('hidden');
+      });
+    });
+  </script>
 
   <!-- Firebase Script -->
   <script type="module">
