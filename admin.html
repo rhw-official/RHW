@@ -10,7 +10,7 @@
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex">
 
   <!-- Sidebar -->
-  <aside class="w-64 bg-slate-900 text-white flex flex-col p-4">
+  <aside class="w-64 bg-slate-900 text-white flex flex-col p-4 shrink-0">
     <div class="flex items-center gap-3 pb-6 border-b border-slate-800">
       <img src="FB_IMG_1789565609062.jpg" class="w-10 h-10 rounded-full border border-emerald-500 object-cover">
       <div>
@@ -19,122 +19,264 @@
       </div>
     </div>
     <nav class="mt-6 space-y-2 text-sm">
-      <a href="#" class="block bg-emerald-600 px-4 py-2.5 rounded-lg text-white font-medium"><i class="fa-solid fa-gauge mr-2"></i> Dashboard</a>
-      <a href="#messages" class="block text-slate-400 hover:bg-slate-800 px-4 py-2.5 rounded-lg"><i class="fa-solid fa-envelope mr-2"></i> Messages</a>
-      <a href="#programs" class="block text-slate-400 hover:bg-slate-800 px-4 py-2.5 rounded-lg"><i class="fa-solid fa-layer-group mr-2"></i> Programs</a>
+      <a href="#messages-sec" class="block hover:bg-slate-800 px-4 py-2.5 rounded-lg font-medium text-slate-300"><i class="fa-solid fa-inbox mr-2"></i> Messages</a>
+      <a href="#works-sec" class="block hover:bg-slate-800 px-4 py-2.5 rounded-lg font-medium text-slate-300"><i class="fa-solid fa-briefcase mr-2"></i> Recent Works</a>
+      <a href="#team-sec" class="block hover:bg-slate-800 px-4 py-2.5 rounded-lg font-medium text-slate-300"><i class="fa-solid fa-users mr-2"></i> Leadership Team</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-8">
+  <main class="flex-1 p-8 overflow-y-auto">
     <div class="flex justify-between items-center mb-8">
       <div>
-        <h1 class="text-2xl font-bold text-slate-900">Welcome, Anjis Khan</h1>
-        <p class="text-xs text-slate-500">Manage RHW organization content and inquiries.</p>
+        <h1 class="text-2xl font-bold text-slate-900">RHW Management Dashboard</h1>
+        <p class="text-xs text-slate-500">Manage RHW organization content and inquiries dynamically.</p>
       </div>
-      <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold">Firebase Active</span>
+      <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold">Firebase Live</span>
     </div>
 
-    <!-- Quick Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="bg-white p-5 rounded-xl border shadow-sm">
-        <span class="text-xs text-slate-500 font-bold uppercase">Founder & Leader</span>
-        <h3 class="text-lg font-bold mt-1">Anjis Khan</h3>
-        <p class="text-xs text-slate-600">01893555037</p>
-      </div>
-      <div class="bg-white p-5 rounded-xl border shadow-sm">
-        <span class="text-xs text-slate-500 font-bold uppercase">Chief Advisor</span>
-        <h3 class="text-lg font-bold mt-1">Hafiz Anuwar Sadek</h3>
-        <p class="text-xs text-emerald-600 font-medium">Strategic Advisor</p>
-      </div>
-      <div class="bg-white p-5 rounded-xl border shadow-sm">
-        <span class="text-xs text-slate-500 font-bold uppercase">Directors</span>
-        <h3 class="text-lg font-bold mt-1">Seydul Amin & M. Taher</h3>
-        <p class="text-xs text-slate-600">Operations & Writing</p>
-      </div>
-    </div>
-
-    <!-- Add Area / Program Form -->
-    <div class="bg-white p-6 rounded-xl border shadow-sm mb-8">
-      <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-600"></i> Publish New Work Area / Activity</h3>
-      <form id="add-area-form" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">Title</label>
-          <input type="text" id="area-title" placeholder="e.g. Youth Empowerment Training" class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500" required>
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-600 mb-1">Description</label>
-          <textarea id="area-desc" rows="3" placeholder="Enter objective or activity description..." class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500" required></textarea>
-        </div>
-        <button type="submit" class="bg-emerald-600 text-white text-sm px-5 py-2.5 rounded-lg font-semibold hover:bg-emerald-700">Publish Program</button>
-      </form>
-    </div>
-
-    <!-- Incoming Messages List -->
-    <div id="messages" class="bg-white p-6 rounded-xl border shadow-sm">
-      <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-inbox text-emerald-600"></i> Contact Form Messages</h3>
+    <!-- 1. INCOMING MESSAGES -->
+    <div id="messages-sec" class="bg-white p-6 rounded-xl border shadow-sm mb-8">
+      <h3 class="font-bold text-lg mb-4 flex items-center justify-between">
+        <span class="flex items-center gap-2"><i class="fa-solid fa-envelope text-emerald-600"></i> Contact Form Messages</span>
+        <button onclick="window.fetchMsgs()" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded">Refresh</button>
+      </h3>
       <div id="messages-container" class="space-y-3">
         <p class="text-xs text-slate-400">Loading messages from Firebase...</p>
       </div>
     </div>
+
+    <!-- 2. RECENT WORKS MANAGEMENT -->
+    <div id="works-sec" class="bg-white p-6 rounded-xl border shadow-sm mb-8">
+      <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-600"></i> Add New Recent Work Activity</h3>
+      
+      <form id="add-work-form" class="space-y-4 border-b pb-6 mb-6">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Activity / Project Title</label>
+          <input type="text" id="work-title" placeholder="e.g. Winter Clothing Distribution Program" class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500" required>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Description</label>
+          <textarea id="work-desc" rows="3" placeholder="Enter detailed information..." class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500" required></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Photo URLs (Multiple Links allowed - Separated by Spaces or Commas)</label>
+          <textarea id="work-images" rows="2" placeholder="https://image1.jpg https://image2.jpg https://image3.jpg" class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+          <span class="text-[11px] text-slate-400">আপাতত ইমেজের লিংকগুলো (Imgur/Facebook Direct Link/Drive link) একটি স্পেস বা কমা দিয়ে যুক্ত করুন। আপনি ২ থেকে ৫টি পর্যন্ত লিংক দিতে পারবেন।</span>
+        </div>
+        <button type="submit" class="bg-emerald-600 text-white text-sm px-5 py-2.5 rounded-lg font-semibold hover:bg-emerald-700">Publish Recent Work</button>
+      </form>
+
+      <!-- Published Recent Works List -->
+      <h4 class="font-bold text-md mb-3 text-slate-700">Published Recent Works</h4>
+      <div id="works-list" class="space-y-3">
+        <p class="text-xs text-slate-400">Loading works...</p>
+      </div>
+    </div>
+
+    <!-- 3. LEADERSHIP TEAM MANAGEMENT -->
+    <div id="team-sec" class="bg-white p-6 rounded-xl border shadow-sm mb-8">
+      <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-user-plus text-emerald-600"></i> Add Leadership Team Member</h3>
+      
+      <form id="add-team-form" class="space-y-4 border-b pb-6 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Full Name</label>
+            <input type="text" id="member-name" placeholder="Name" class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500" required>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Role / Designation</label>
+            <input type="text" id="member-role" placeholder="e.g. Chief Advisor / Executive Director" class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500" required>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Email (Optional)</label>
+            <input type="email" id="member-email" placeholder="Email" class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Photo URL (Optional)</label>
+            <input type="url" id="member-photo" placeholder="https://example.com/photo.jpg" class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Short Bio / Responsibility Description</label>
+          <textarea id="member-bio" rows="2" placeholder="Responsibilities..." class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+        </div>
+        <button type="submit" class="bg-emerald-600 text-white text-sm px-5 py-2.5 rounded-lg font-semibold hover:bg-emerald-700">Add Team Member</button>
+      </form>
+
+      <!-- Member List -->
+      <h4 class="font-bold text-md mb-3 text-slate-700">Current Leadership Members</h4>
+      <div id="team-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <p class="text-xs text-slate-400 col-span-full">Loading members...</p>
+      </div>
+    </div>
   </main>
 
+  <!-- Firebase Script Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "SENDER_ID",
-      appId: "APP_ID"
+      apiKey: "AIzaSyDfagh1JDqLMrrvj_f0WLT6_5OvKd6Q6ms",
+      authDomain: "rhw-official.firebaseapp.com",
+      projectId: "rhw-official",
+      storageBucket: "rhw-official.firebasestorage.app",
+      messagingSenderId: "756438918491",
+      appId: "1:756438918491:web:426183dfc5485bca54e67e"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Save Program
-    document.getElementById('add-area-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      try {
-        await addDoc(collection(db, "programs"), {
-          title: document.getElementById('area-title').value,
-          description: document.getElementById('area-desc').value,
-          date: new Date().toISOString()
-        });
-        alert('Program Published!');
-        e.target.reset();
-      } catch (err) {
-        alert('Setup Firebase credentials in code to use database.');
+    // Global Functions for Deletion
+    window.deleteMessage = async (id) => {
+      if(confirm('Are you sure you want to delete this message?')) {
+        await deleteDoc(doc(db, "messages", id));
+        fetchMsgs();
       }
-    });
+    };
 
-    // Fetch Messages
-    async function fetchMsgs() {
+    window.deleteWork = async (id) => {
+      if(confirm('Are you sure you want to delete this activity?')) {
+        await deleteDoc(doc(db, "works", id));
+        fetchWorks();
+      }
+    };
+
+    window.deleteMember = async (id) => {
+      if(confirm('Remove this member from leadership team?')) {
+        await deleteDoc(doc(db, "team", id));
+        fetchTeam();
+      }
+    };
+
+    // 1. Fetch Contact Messages
+    window.fetchMsgs = async function() {
       const box = document.getElementById('messages-container');
       try {
-        const snap = await getDocs(collection(db, "messages"));
-        if(snap.empty) { box.innerHTML = '<p class="text-xs text-slate-400">No messages yet.</p>'; return; }
+        const q = query(collection(db, "messages"), orderBy("date", "desc"));
+        const snap = await getDocs(q);
+        if(snap.empty) { box.innerHTML = '<p class="text-xs text-slate-400">No messages in inbox yet.</p>'; return; }
         box.innerHTML = '';
-        snap.forEach(doc => {
-          const d = doc.data();
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          const id = docSnap.id;
           box.innerHTML += `
-            <div class="p-3 bg-slate-50 border rounded-lg text-xs">
-              <div class="flex justify-between font-bold text-slate-800 mb-1">
-                <span>${d.name} (${d.email})</span>
-                <span class="text-slate-400 font-normal">${new Date(d.date).toLocaleDateString()}</span>
+            <div class="p-4 bg-slate-50 border rounded-lg text-xs relative flex justify-between items-start gap-4">
+              <div>
+                <div class="flex items-center gap-2 font-bold text-slate-800 mb-1">
+                  <span>${d.name || 'Anonymous'}</span>
+                  <span class="text-emerald-600">(${d.email})</span>
+                  <span class="text-slate-400 font-normal text-[10px]">${d.date ? new Date(d.date).toLocaleString() : ''}</span>
+                </div>
+                <p class="text-slate-600 leading-relaxed">${d.message}</p>
               </div>
-              <p class="text-slate-600">${d.message}</p>
+              <button onclick="deleteMessage('${id}')" class="text-red-500 hover:text-red-700 text-xs font-semibold shrink-0"><i class="fa-solid fa-trash"></i> Delete</button>
             </div>
           `;
         });
       } catch(e) {
-        box.innerHTML = '<p class="text-xs text-slate-400">Connect Firebase to see live inbox.</p>';
+        box.innerHTML = '<p class="text-xs text-red-400">Failed to load messages.</p>';
       }
     }
+
+    // 2. Publish & Fetch Recent Works
+    document.getElementById('add-work-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rawImages = document.getElementById('work-images').value;
+      // Split images by whitespace or commas
+      const imageArray = rawImages.split(/[\s,]+/).filter(url => url.trim() !== '');
+
+      try {
+        await addDoc(collection(db, "works"), {
+          title: document.getElementById('work-title').value,
+          description: document.getElementById('work-desc').value,
+          images: imageArray,
+          date: new Date().toISOString()
+        });
+        alert('Work Activity Published Successfully!');
+        e.target.reset();
+        fetchWorks();
+      } catch (err) {
+        alert('Error publishing work: ' + err.message);
+      }
+    });
+
+    async function fetchWorks() {
+      const box = document.getElementById('works-list');
+      try {
+        const q = query(collection(db, "works"), orderBy("date", "desc"));
+        const snap = await getDocs(q);
+        if(snap.empty) { box.innerHTML = '<p class="text-xs text-slate-400">No published activities.</p>'; return; }
+        box.innerHTML = '';
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          const id = docSnap.id;
+          box.innerHTML += `
+            <div class="p-3 bg-slate-50 border rounded-lg text-xs flex justify-between items-center">
+              <div>
+                <h5 class="font-bold text-slate-800">${d.title}</h5>
+                <p class="text-slate-500 text-[11px]">${d.images ? d.images.length : 0} Image(s) Attached</p>
+              </div>
+              <button onclick="deleteWork('${id}')" class="text-red-500 hover:text-red-700 font-semibold"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          `;
+        });
+      } catch(e) {
+        box.innerHTML = '<p class="text-xs text-red-400">Failed to load activities.</p>';
+      }
+    }
+
+    // 3. Add & Fetch Leadership Team
+    document.getElementById('add-team-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        await addDoc(collection(db, "team"), {
+          name: document.getElementById('member-name').value,
+          role: document.getElementById('member-role').value,
+          email: document.getElementById('member-email').value,
+          photo: document.getElementById('member-photo').value,
+          bio: document.getElementById('member-bio').value
+        });
+        alert('New Leadership Member Added!');
+        e.target.reset();
+        fetchTeam();
+      } catch (err) {
+        alert('Error adding member: ' + err.message);
+      }
+    });
+
+    async function fetchTeam() {
+      const box = document.getElementById('team-list');
+      try {
+        const snap = await getDocs(collection(db, "team"));
+        if(snap.empty) { box.innerHTML = '<p class="text-xs text-slate-400 col-span-full">No team members.</p>'; return; }
+        box.innerHTML = '';
+        snap.forEach(docSnap => {
+          const d = docSnap.data();
+          const id = docSnap.id;
+          box.innerHTML += `
+            <div class="p-3 bg-slate-50 border rounded-lg text-xs flex justify-between items-center">
+              <div>
+                <h5 class="font-bold text-slate-800">${d.name}</h5>
+                <span class="text-emerald-600 font-medium text-[11px]">${d.role}</span>
+              </div>
+              <button onclick="deleteMember('${id}')" class="text-red-500 hover:text-red-700 font-semibold"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          `;
+        });
+      } catch(e) {
+        box.innerHTML = '<p class="text-xs text-red-400 col-span-full">Failed to load team.</p>';
+      }
+    }
+
+    // Initialize Dashboard Loads
     fetchMsgs();
+    fetchWorks();
+    fetchTeam();
   </script>
 </body>
 </html>
