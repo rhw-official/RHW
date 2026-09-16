@@ -1,74 +1,80 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RHW - Admin Dashboard</title>
+  <title>RHW Admin Panel</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex">
 
   <!-- Sidebar -->
-  <aside class="w-64 bg-slate-900 text-white flex flex-col">
-    <div class="p-5 border-b border-slate-800 font-bold text-xl flex items-center gap-2">
-      <i class="fa-solid fa-user-shield text-emerald-500"></i> RHW Admin
+  <aside class="w-64 bg-slate-900 text-white flex flex-col p-4">
+    <div class="flex items-center gap-3 pb-6 border-b border-slate-800">
+      <img src="FB_IMG_1789565609062.jpg" class="w-10 h-10 rounded-full border border-emerald-500 object-cover">
+      <div>
+        <h2 class="font-bold text-sm">RHW Admin</h2>
+        <span class="text-xs text-emerald-400">Control Panel</span>
+      </div>
     </div>
-    <nav class="flex-1 p-4 space-y-2 text-sm font-medium">
-      <a href="#dashboard" class="flex items-center gap-3 bg-emerald-600 px-4 py-2.5 rounded-lg text-white"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
-      <a href="#programs" class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-2.5 rounded-lg"><i class="fa-solid fa-tasks"></i> Programs</a>
-      <a href="#messages" class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-2.5 rounded-lg"><i class="fa-solid fa-envelope"></i> Messages</a>
+    <nav class="mt-6 space-y-2 text-sm">
+      <a href="#" class="block bg-emerald-600 px-4 py-2.5 rounded-lg text-white font-medium"><i class="fa-solid fa-gauge mr-2"></i> Dashboard</a>
+      <a href="#messages" class="block text-slate-400 hover:bg-slate-800 px-4 py-2.5 rounded-lg"><i class="fa-solid fa-envelope mr-2"></i> Messages</a>
+      <a href="#programs" class="block text-slate-400 hover:bg-slate-800 px-4 py-2.5 rounded-lg"><i class="fa-solid fa-layer-group mr-2"></i> Programs</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-8 overflow-y-auto">
-    <!-- Header -->
+  <main class="flex-1 p-8">
     <div class="flex justify-between items-center mb-8">
-      <h1 class="text-2xl font-bold">Dashboard Overview</h1>
-      <span class="text-sm bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-medium">Status: Live</span>
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900">Welcome, Anjis Khan</h1>
+        <p class="text-xs text-slate-500">Manage RHW organization content and inquiries.</p>
+      </div>
+      <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold">Firebase Active</span>
     </div>
 
-    <!-- Quick Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
-        <div>
-          <p class="text-sm text-slate-500 font-medium">Total Programs</p>
-          <p id="stat-programs-count" class="text-2xl font-bold mt-1">4</p>
-        </div>
-        <i class="fa-solid fa-folder text-3xl text-emerald-500"></i>
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white p-5 rounded-xl border shadow-sm">
+        <span class="text-xs text-slate-500 font-bold uppercase">Founder & Leader</span>
+        <h3 class="text-lg font-bold mt-1">Anjis Khan</h3>
+        <p class="text-xs text-slate-600">01893555037</p>
       </div>
-      <div class="bg-white p-5 rounded-xl border shadow-sm flex items-center justify-between">
-        <div>
-          <p class="text-sm text-slate-500 font-medium">Messages</p>
-          <p id="stat-messages-count" class="text-2xl font-bold mt-1">12</p>
-        </div>
-        <i class="fa-solid fa-inbox text-3xl text-blue-500"></i>
+      <div class="bg-white p-5 rounded-xl border shadow-sm">
+        <span class="text-xs text-slate-500 font-bold uppercase">Chief Advisor</span>
+        <h3 class="text-lg font-bold mt-1">Hafiz Anuwar Sadek</h3>
+        <p class="text-xs text-emerald-600 font-medium">Strategic Advisor</p>
+      </div>
+      <div class="bg-white p-5 rounded-xl border shadow-sm">
+        <span class="text-xs text-slate-500 font-bold uppercase">Directors</span>
+        <h3 class="text-lg font-bold mt-1">Seydul Amin & M. Taher</h3>
+        <p class="text-xs text-slate-600">Operations & Writing</p>
       </div>
     </div>
 
-    <!-- Add Program Form -->
+    <!-- Add Area / Program Form -->
     <div class="bg-white p-6 rounded-xl border shadow-sm mb-8">
-      <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-600"></i> Add New Program</h2>
-      <form id="add-program-form" class="space-y-4">
+      <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-plus-circle text-emerald-600"></i> Publish New Work Area / Activity</h3>
+      <form id="add-area-form" class="space-y-4">
         <div>
-          <label class="block text-sm font-medium mb-1">Program Title</label>
-          <input type="text" id="prog-title" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="e.g. Healthcare Access Camp" required>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Title</label>
+          <input type="text" id="area-title" placeholder="e.g. Youth Empowerment Training" class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500" required>
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">Description</label>
-          <textarea id="prog-desc" rows="3" class="w-full border rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Write program details..." required></textarea>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Description</label>
+          <textarea id="area-desc" rows="3" placeholder="Enter objective or activity description..." class="w-full border rounded-lg p-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500" required></textarea>
         </div>
-        <button type="submit" class="bg-emerald-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">+ Add Program</button>
+        <button type="submit" class="bg-emerald-600 text-white text-sm px-5 py-2.5 rounded-lg font-semibold hover:bg-emerald-700">Publish Program</button>
       </form>
     </div>
 
-    <!-- Received Messages Section -->
-    <div class="bg-white p-6 rounded-xl border shadow-sm">
-      <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-comments text-emerald-600"></i> Website Messages</h2>
-      <div id="messages-list" class="space-y-3">
-        <p class="text-slate-500 text-sm">Loading messages...</p>
+    <!-- Incoming Messages List -->
+    <div id="messages" class="bg-white p-6 rounded-xl border shadow-sm">
+      <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fa-solid fa-inbox text-emerald-600"></i> Contact Form Messages</h3>
+      <div id="messages-container" class="space-y-3">
+        <p class="text-xs text-slate-400">Loading messages from Firebase...</p>
       </div>
     </div>
   </main>
@@ -77,12 +83,11 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // FIXME: Replace with your Firebase credentials
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
       messagingSenderId: "SENDER_ID",
       appId: "APP_ID"
     };
@@ -90,50 +95,46 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Add Program Action
-    document.getElementById('add-program-form').addEventListener('submit', async (e) => {
+    // Save Program
+    document.getElementById('add-area-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       try {
         await addDoc(collection(db, "programs"), {
-          title: document.getElementById('prog-title').value,
-          description: document.getElementById('prog-desc').value,
-          createdAt: new Date()
+          title: document.getElementById('area-title').value,
+          description: document.getElementById('area-desc').value,
+          date: new Date().toISOString()
         });
-        alert('Program added successfully!');
+        alert('Program Published!');
         e.target.reset();
       } catch (err) {
-        alert('Error: ' + err.message);
+        alert('Setup Firebase credentials in code to use database.');
       }
     });
 
-    // Load Messages Action
-    async function loadMessages() {
-      const list = document.getElementById('messages-list');
+    // Fetch Messages
+    async function fetchMsgs() {
+      const box = document.getElementById('messages-container');
       try {
-        const query = await getDocs(collection(db, "messages"));
-        if(query.empty) {
-          list.innerHTML = '<p class="text-slate-400 text-sm">No messages received yet.</p>';
-          return;
-        }
-        list.innerHTML = '';
-        query.forEach(doc => {
-          const m = doc.data();
-          list.innerHTML += `
-            <div class="p-4 bg-slate-50 border rounded-lg">
-              <div class="flex justify-between items-center mb-1">
-                <span class="font-bold text-sm text-slate-800">${m.name} (${m.email})</span>
-                <span class="text-xs text-slate-400">${new Date(m.date).toLocaleDateString()}</span>
+        const snap = await getDocs(collection(db, "messages"));
+        if(snap.empty) { box.innerHTML = '<p class="text-xs text-slate-400">No messages yet.</p>'; return; }
+        box.innerHTML = '';
+        snap.forEach(doc => {
+          const d = doc.data();
+          box.innerHTML += `
+            <div class="p-3 bg-slate-50 border rounded-lg text-xs">
+              <div class="flex justify-between font-bold text-slate-800 mb-1">
+                <span>${d.name} (${d.email})</span>
+                <span class="text-slate-400 font-normal">${new Date(d.date).toLocaleDateString()}</span>
               </div>
-              <p class="text-slate-600 text-sm">${m.message}</p>
+              <p class="text-slate-600">${d.message}</p>
             </div>
           `;
         });
       } catch(e) {
-        list.innerHTML = '<p class="text-red-500 text-sm">Please update Firebase credentials in the script.</p>';
+        box.innerHTML = '<p class="text-xs text-slate-400">Connect Firebase to see live inbox.</p>';
       }
     }
-
-    loadMessages();
+    fetchMsgs();
   </script>
 </body>
 </html>
